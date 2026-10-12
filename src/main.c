@@ -5,7 +5,7 @@
 #include "periph/adc1.h"
 #include "periph/dma.h"
 #include "periph/rcc.h"
-#include "periph/timers.h"
+#include "periph/tim2.h"
 #include "periph/usart2.h"
 #include "rtos/rtos.h"
 
@@ -14,7 +14,7 @@
 int main(void)
 {
     rcc_init();
-    tim6_init();
+    tim2_init();
     uart2_init();
     dma_init();
     adc1_init();

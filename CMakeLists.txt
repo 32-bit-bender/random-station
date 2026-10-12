@@ -11,13 +11,14 @@ set(RTOS ${CMAKE_SOURCE_DIR}/lib/FreeRTOS-Kernel)
 set(SRC ${CMAKE_SOURCE_DIR}/src)
 
 set(LL_SOURCES
-    ${LL}/Src/stm32f4xx_ll_utils.c
-    ${LL}/Src/stm32f4xx_ll_rcc.c
-    ${LL}/Src/stm32f4xx_ll_gpio.c
-    ${LL}/Src/stm32f4xx_ll_tim.c
-    ${LL}/Src/stm32f4xx_ll_usart.c
     ${LL}/Src/stm32f4xx_ll_adc.c
     ${LL}/Src/stm32f4xx_ll_dma.c
+    ${LL}/Src/stm32f4xx_ll_exti.c
+    ${LL}/Src/stm32f4xx_ll_gpio.c
+    ${LL}/Src/stm32f4xx_ll_rcc.c
+    ${LL}/Src/stm32f4xx_ll_tim.c
+    ${LL}/Src/stm32f4xx_ll_usart.c
+    ${LL}/Src/stm32f4xx_ll_utils.c
   )
 
 file(GLOB_RECURSE APP_SOURCES CONFIGURE_DEPENDS
