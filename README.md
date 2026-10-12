@@ -1,6 +1,4 @@
-# clap-lamp
-
-Firmware for an LED lamp driver that mainly responds to audio claps.
+# random-statios
 
 > Work in progress. Right now this is just the code workspace (build, flash and
 > debug setup) with a blink test on an STM32F446.
@@ -22,7 +20,7 @@ The ST libraries are git submodules, so clone with:
 
 ```bash
 git clone --recurse-submodules <repo-url>
-cd clap-lamp
+cd random-station
 ```
 
 If you already cloned without the flag:
