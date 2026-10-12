@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "Debug random-station (OpenOCD + ST-Link)",
+      "type": "cortex-debug",
+      "request": "launch",
+      "servertype": "openocd",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/build/random-station.elf",
+      "device": "STM32F446RE",
+      "configFiles": ["interface/stlink.cfg", "target/stm32f4x.cfg"],
+      "gdbPath": "gdb-multiarch",
+      "runToEntryPoint": "main",
+      "preLaunchTask": "build"
+    }
+  ]
+}

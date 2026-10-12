@@ -1,0 +1,24 @@
+{
+  "version": 4,
+  "configurations": [
+    {
+      "name": "STM32F4",
+      "compilerPath": "/usr/bin/arm-none-eabi-gcc",
+      "cStandard": "c11",
+      "intelliSenseMode": "gcc-arm",
+      "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+      "includePath": [
+        "${workspaceFolder}/src",
+        "${workspaceFolder}/lib/cmsis_core/CMSIS/Core/Include",
+        "${workspaceFolder}/lib/cmsis_device_f4/Include",
+        "${workspaceFolder}/lib/stm32f4xx_hal_driver/Inc",
+        "${workspaceFolder}/lib/FreeRTOS-Kernel/include",
+        "${workspaceFolder}/lib/FreeRTOS-Kernel/portable"
+           ],
+      "defines": [
+        "STM32F446xx",
+        "USE_FULL_LL_DRIVER"
+      ]
+    }
+  ]
+}

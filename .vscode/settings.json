@@ -1,0 +1,28 @@
+{
+  "editor.rulers": [80],
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  "cortex-debug.armToolchainPath": "/usr/bin",
+
+  "c-cpp-flylint.language": "c",
+  "c-cpp-flylint.standard": ["c11"],
+  "c-cpp-flylint.clang.enable": false,
+  "c-cpp-flylint.flawfinder.enable": false,
+  "c-cpp-flylint.lizard.enable": false,
+  "c-cpp-flylint.flexelint.enable": false,
+  "c-cpp-flylint.pclp.enable": false,
+  "c-cpp-flylint.cppcheck.enable": true,
+  "c-cpp-flylint.cppcheck.force": false,
+  "c-cpp-flylint.cppcheck.unusedFunction": false,
+  "c-cpp-flylint.cppcheck.includePaths": [
+    "${workspaceFolder}/src"
+  ],
+  "c-cpp-flylint.excludeFromWorkspacePaths": [
+    "${workspaceFolder}/lib",
+    "${workspaceFolder}/build"
+  ],
+  "cortex-debug.variableUseNaturalFormat": false
+}
