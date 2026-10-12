@@ -1,4 +1,4 @@
-# random-statios
+# random-station
 
 > Work in progress. Right now this is just the code workspace (build, flash and
 > debug setup) with a blink test on an STM32F446.
