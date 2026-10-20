@@ -7,7 +7,7 @@
 #include <stm32f4xx_ll_bus.h>
 #include <stm32f4xx_ll_gpio.h>
 #include <stm32f4xx_ll_tim.h>
-#include "tim2.h"
+#include "tim.h"
 
 LL_TIM_InitTypeDef tim2_init_struct = {0};
 LL_TIM_InitTypeDef tim3_init_struct = {0};
@@ -43,7 +43,7 @@ void tim3_init (void)
 
     tim3_init_struct.Prescaler = (SystemCoreClock / 1000000) - 1;
     tim3_init_struct.CounterMode = LL_TIM_COUNTERMODE_UP;
-    tim3_init_struct.Autoreload = 49999;
+    tim3_init_struct.Autoreload = 59999;
     tim3_init_struct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
     LL_TIM_Init(TIM3, &tim3_init_struct);
     LL_TIM_DisableARRPreload(TIM3);
@@ -58,6 +58,10 @@ void tim3_init (void)
     LL_TIM_OC_DisableFast(TIM3, LL_TIM_CHANNEL_CH1);
     LL_TIM_SetTriggerOutput(TIM3, LL_TIM_TRGO_RESET);
     LL_TIM_DisableMasterSlaveMode(TIM3);
+
+    LL_TIM_CC_EnableChannel(TIM3, LL_TIM_CHANNEL_CH1);
+    LL_TIM_EnableCounter(TIM3);
+
 }
 
 uint32_t timebase_ms(void)

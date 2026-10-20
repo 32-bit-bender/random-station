@@ -4,8 +4,9 @@
 
 #include "periph/adc1.h"
 #include "periph/dma.h"
+#include "periph/exti.h"
 #include "periph/rcc.h"
-#include "periph/tim2.h"
+#include "periph/tim.h"
 #include "periph/usart2.h"
 #include "rtos/rtos.h"
 
@@ -15,9 +16,12 @@ int main(void)
 {
     rcc_init();
     tim2_init();
+    tim3_init();
+    exti_init();
     uart2_init();
     dma_init();
     adc1_init();
+
 
     log_init();               /* creates the queue and the log task */
 

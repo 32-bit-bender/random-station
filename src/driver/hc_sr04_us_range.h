@@ -1,5 +1,5 @@
 /**
- * @file    hc-sr04_us_range.h
+ * @file    hc_sr04_us_range.h
  * @brief   TODO: one-line description
  * @author  32-bit-bender
  * @date    2026-10-12
@@ -14,7 +14,7 @@ extern "C" {
 
 #include <stdint.h>
 
-uint32_t hc_s04_get_last_recorded_range(void);
+uint32_t hc_s04_get_last_recorded_range_cm(void);
 
 #ifdef __cplusplus
 }
