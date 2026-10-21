@@ -20,8 +20,6 @@
 
 LOG_MODULE("main");
 
-#define SPI2_CS1_PC9  LL_GPIO_PIN_9
-
 void task_main(void* arg)
 {
     (void)arg;
