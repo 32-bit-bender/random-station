@@ -18,6 +18,7 @@ void tim2_init(void);
 void tim3_init (void);
 uint32_t timebase_ms(void);
 uint32_t timebase_us(void);
+void tim2_delay_us(const uint32_t delay_us);
 void tim2_delay_ms(const uint32_t delay_ms);
 
 #ifdef __cplusplus

@@ -7,6 +7,7 @@
 
 #include <stm32f4xx_ll_gpio.h>
 #include <stm32f4xx_ll_tim.h>
+#include <string.h>
 
 #include "driver/hc_sr04_us_range.h"
 #include "log/log.h"
@@ -14,30 +15,39 @@
 #include "rtos/rtos.h"
 #include "rtos/tasks/task_main.h"
 
+#include "periph/spi2.h"
 #include "periph/tim.h"
 
 LOG_MODULE("main");
 
+#define SPI2_CS1_PC9  LL_GPIO_PIN_9
 
 void task_main(void* arg)
 {
     (void)arg;
     TickType_t last_wake = xTaskGetTickCount();
     LOG_INF("task started");
+    spi2_init();
+    uint8_t tx_buff[1] = {0};
+    uint8_t rx_buff[1] = {0};
+    uint8_t cmd_list[4] = {0x01, 0x02, 0x03, 0x04};
     for (;;) {
-        // LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_5);
-        LOG_INF("TIM3 COUNT %ld", (uint32_t) LL_TIM_GetCounter(TIM3));
+        for (uint8_t i = 0; i<sizeof(cmd_list); i++)
+        {
+            tx_buff[0] = cmd_list[i];
 
-        LOG_INF("Distance: %ld us",  exti_get_last_pulse_response_delay());
-        LOG_INF("Distance: %ld cm",  hc_s04_get_last_recorded_range_cm());
-        if (hc_s04_get_last_recorded_range_cm()<=20)
-        {
-            LL_GPIO_SetOutputPin(GPIOA, LL_GPIO_PIN_5);
+            LOG_INF("Sedinding spi command 0x%02X", cmd_list[i]);
+            bool ok = spi2_write(tx_buff, 1);
+            if(ok)
+            {
+                vTaskDelay(1);
+                ok = spi2_read(rx_buff, 1);
+            }
+
+            LOG_INF("Response: 0x%02X", rx_buff[0]);
+
+            vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(1000));
         }
-        else
-        {
-            LL_GPIO_ResetOutputPin(GPIOA, LL_GPIO_PIN_5);
-        }
-        vTaskDelayUntil(&last_wake, pdMS_TO_TICKS(500));
+
     }
 }

@@ -69,10 +69,20 @@ uint32_t timebase_ms(void)
     return (LL_TIM_GetCounter(TIM2) / 1000);
 }
 
+
 void tim2_delay_ms(const uint32_t delay_ms)
 {
     uint32_t start_tick = timebase_ms();
     while ((timebase_ms() - start_tick) < delay_ms)
+    {
+        // Wait until 'delay_ms' millisecond interrupts have occurred
+    }
+}
+
+void tim2_delay_us(const uint32_t delay_us)
+{
+    uint32_t start_tick = timebase_us();
+    while ((timebase_us() - start_tick) < delay_us)
     {
         // Wait until 'delay_ms' millisecond interrupts have occurred
     }
