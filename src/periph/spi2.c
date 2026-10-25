@@ -55,22 +55,14 @@
  * number must be >= configMAX_SYSCALL_INTERRUPT_PRIORITY (5). */
 #define SPI2_DMA_IRQ_PRIO 6U
 
-static LL_GPIO_InitTypeDef gpio_init_spi2_sck_miso_mosi = {
+static LL_GPIO_InitTypeDef gpio_init_spi2_sck_miso_mosi =
+{
     .Pin = (SPI2_MISO_PC2 | SPI2_MOSI_PC3 | SPI2_SCK_PC7),
     .Mode = LL_GPIO_MODE_ALTERNATE,
     .Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH,
     .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
     .Pull = LL_GPIO_PULL_NO,
     .Alternate = LL_GPIO_AF_5,
-};
-
-static LL_GPIO_InitTypeDef gpio_init_spi2_cs = {
-    .Pin = SPI2_CS1_PC9,
-    .Mode = LL_GPIO_MODE_OUTPUT,
-    .Speed = LL_GPIO_SPEED_FREQ_LOW,
-    .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-    .Pull = LL_GPIO_PULL_UP,
-    .Alternate = LL_GPIO_AF_0,
 };
 
 static LL_SPI_InitTypeDef spi2_init_struct;
@@ -85,11 +77,7 @@ static void spi2_gpio_init(void)
 {
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOC);
 
-    /* Drive CS high before it becomes an output, so it never glitches low. */
-    LL_GPIO_SetOutputPin(GPIOC, SPI2_CS1_PC9);
-
     LL_GPIO_Init(GPIOC, &gpio_init_spi2_sck_miso_mosi);
-    LL_GPIO_Init(GPIOC, &gpio_init_spi2_cs);
 }
 
 static void dma_stream_config(uint32_t stream, uint32_t direction)
@@ -132,7 +120,7 @@ void spi2_init(void)
     spi2_init_struct.ClockPolarity = LL_SPI_POLARITY_LOW;
     spi2_init_struct.ClockPhase = LL_SPI_PHASE_1EDGE;
     spi2_init_struct.NSS = LL_SPI_NSS_SOFT;
-    spi2_init_struct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV16;
+    spi2_init_struct.BaudRate = LL_SPI_BAUDRATEPRESCALER_DIV2;
     spi2_init_struct.BitOrder = LL_SPI_MSB_FIRST;
     spi2_init_struct.CRCCalculation = LL_SPI_CRCCALCULATION_DISABLE;
     spi2_init_struct.CRCPoly = 10;
@@ -150,15 +138,6 @@ void spi2_init(void)
 
 /* ---- bus ownership and chip select -------------------------------------- */
 
-static void cs_low(void)
-{
-    LL_GPIO_ResetOutputPin(GPIOC, SPI2_CS1_PC9);
-}
-
-static void cs_high(void)
-{
-    LL_GPIO_SetOutputPin(GPIOC, SPI2_CS1_PC9);
-}
 
 /* Start of a transaction: take the bus, then select the device. */
 static bool bus_begin(void)
@@ -171,14 +150,12 @@ static bool bus_begin(void)
         pdPASS) {
         return false;
     }
-    cs_low();
     return true;
 }
 
 /* End of a transaction: deselect the device, then give the bus back. */
 static void bus_end(void)
 {
-    cs_high();
     (void)xSemaphoreGive(bus_mutex);
 }
 
